@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Tax Estimator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-top: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #e8f0fe;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Corporate Payroll Tax Estimator</h1>
+
+    <div class="input-group">
+        <label>Employee Name</label>
+        <input type="text" id="name" placeholder="Enter employee name">
+    </div>
+
+    <div class="input-group">
+        <label>Basic Salary</label>
+        <input type="number" id="basic" placeholder="Enter basic salary">
+    </div>
+
+    <div class="input-group">
+        <label>HRA</label>
+        <input type="number" id="hra" placeholder="Enter HRA">
+    </div>
+
+    <div class="input-group">
+        <label>Bonus</label>
+        <input type="number" id="bonus" placeholder="Enter bonus">
+    </div>
+
+    <button onclick="calculatePayroll()">Calculate Payroll</button>
+
+    <div class="result" id="result">
+
+        <h2>Payroll Result</h2>
+
+        <p>Employee: <span id="resultName"></span></p>
+
+        <p>Gross Salary: ₹<span id="gross"></span></p>
+
+        <p>Annual Salary: ₹<span id="annual"></span></p>
+
+        <p>Monthly Tax: ₹<span id="tax"></span></p>
+
+        <p>PF Deduction: ₹<span id="pf"></span></p>
+
+        <h3>Net Salary: ₹<span id="net"></span></h3>
+
+    </div>
+
+</div>
+
+<script>
+
+function calculatePayroll() {
+
+    // Get input values
+    let name = document.getElementById("name").value;
+
+    let basic = Number(document.getElementById("basic").value) || 0;
+
+    let hra = Number(document.getElementById("hra").value) || 0;
+
+    let bonus = Number(document.getElementById("bonus").value) || 0;
+
+
+    // Calculate gross salary
+    let gross = basic + hra + bonus;
+
+
+    // Calculate annual salary
+    let annualSalary = gross * 12;
+
+
+    // Calculate tax
+    let annualTax = 0;
+
+    if (annualSalary <= 300000) {
+
+        annualTax = 0;
+
+    } else if (annualSalary <= 600000) {
+
+        annualTax = (annualSalary - 300000) * 0.05;
+
+    } else if (annualSalary <= 900000) {
+
+        annualTax =
+            15000 +
+            (annualSalary - 600000) * 0.10;
+
+    } else if (annualSalary <= 1200000) {
+
+        annualTax =
+            45000 +
+            (annualSalary - 900000) * 0.15;
+
+    } else {
+
+        annualTax =
+            90000 +
+            (annualSalary - 1200000) * 0.20;
+
+    }
+
+
+    // Monthly tax
+    let monthlyTax = annualTax / 12;
+
+
+    // PF = 12% of basic salary
+    let pf = basic * 0.12;
+
+
+    // Net salary
+    let netSalary = gross - monthlyTax - pf;
+
+
+    // Display results
+    document.getElementById("resultName").innerText = name;
+
+    document.getElementById("gross").innerText = gross.toFixed(2);
+
+    document.getElementById("annual").innerText = annualSalary.toFixed(2);
+
+    document.getElementById("tax").innerText = monthlyTax.toFixed(2);
+
+    document.getElementById("pf").innerText = pf.toFixed(2);
+
+    document.getElementById("net").innerText = netSalary.toFixed(2);
+
+
+    // Show result section
+    document.getElementById("result").style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>
