@@ -11,7 +11,6 @@ def sign_up():
         "BALANCE": balance,
     }
     print(f"ACCOUNT CREATED SUCCESSFUL 🎉 THANK YOU FOR CHOOSING OUR BANK 🙏")
-    # print(f"THANK YOU FOR CHOOSING OUR BANK 🙏")
     print(f"YOUR ACCOUNT NAME IS:{name}\nYOUR ACCOUNT NUMBER IS:{account}")
     
 def checkbalance():
